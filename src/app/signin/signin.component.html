@@ -1,0 +1,65 @@
+<div class="container">
+  <form class="form-signin" (submit)="signin()" #form="ngForm"> 
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input 
+    type="email"  
+    id="inputEmail" 
+    class="form-control" 
+    placeholder="Email address" 
+    required autofocus
+    [(ngModel)]="signinForm.email"
+    name="email"
+    #email="ngModel"
+    email="true"
+    >
+    <!-- 当email是有效的或者email是干净的没有被碰过的那么 这个div就是隐藏状态 -->
+    <!-- <div [hidden]="email.valid||email.pristine" class="alert alert-danger">email is required</div>-->
+
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+      <div *ngIf="email.errors.required">
+        email is required
+      </div>
+      <div *ngIf="email.errors.email">
+        Invalid Email
+      </div>
+    </div>
+
+    <!-- <div *ngIf="email_err_msg" class="alert alert-danger">{{email_err_msg}}</div> -->
+
+
+    <!-- angular表单双向绑定会为绑定元素提供一些特殊类名 ng-touched ng-dirty ng-valid... -->
+    <!-- <p>{{email.className}}</p> -->
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input 
+    type="password" 
+    id="inputPassword" 
+    class="form-control" 
+    placeholder="Password" 
+    required [(ngModel)]="signinForm.password" 
+    name="password"
+    [(ngModel)]="signinForm.password"
+    #password="ngModel"
+    minlength="8"
+    maxlength="12"
+    >
+    
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+      <div *ngIf="password.errors.required">
+        password is required
+      </div>
+      <div *ngIf="password.errors.minlength">
+        password minlength 8
+      </div> 
+    </div>
+    <div *ngIf="email_err_msg" class="alert alert-danger">{{email_err_msg}}</div>
+    
+
+    <button 
+    class="btn btn-lg btn-primary btn-block" 
+    type="submit"
+    [disabled]="!form.form.valid"
+    >Sign in</button>
+  </form>
+  <p class="info"><a routerLink="/signup">Sign up</a></p>
+</div>
